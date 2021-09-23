@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: validation-job
+  annotations:
+    argocd.argoproj.io/hook: "PostSync"
+spec:
+  ttlSecondsAfterFinished: 100
+  backoffLimit: 6
+  template:
+    metadata:
+      labels:
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+      - name: success
+        image: alpine
+        command: ["echo", "Nothing to be done"]
+      restartPolicy: Never
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: validation-job2
+  annotations:
+    argocd.argoproj.io/hook: "PostSync"
+spec:
+  ttlSecondsAfterFinished: 100
+  backoffLimit: 6
+  template:
+    metadata:
+      labels:
+        sidecar.istio.io/inject: "false"
+    spec:
+      containers:
+      - name: success
+        image: alpine
+        command: ["echo", "Nothing to be done"]
+      restartPolicy: Never
